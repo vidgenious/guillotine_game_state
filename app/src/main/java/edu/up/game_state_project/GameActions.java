@@ -6,6 +6,7 @@ public class GameActions {
     private boolean decksShuffled = false;
     Card temp;
     Guillotine_Game_State gameState;
+    private boolean gameStart = false;
 
     /**
      * Basic Actions
@@ -22,8 +23,11 @@ public class GameActions {
 
     //checks if you can start the game and starts it
     public boolean startGame(){
+        this.gameStart = true;
         shuffleDecks();
         dealStartingGameCards();
+        gameState.turnPhase = 0;
+        this.gameStart = false;
         return true;
       //  setPlayerTurn();
 
@@ -63,7 +67,7 @@ public class GameActions {
     //deals all cards needed to be dealt at start of game
     public boolean dealStartingGameCards(){
         //if it is first turn of first day
-        if(gameState.dayNum == 1 && gameState.turnPhase == 1){
+        if(gameState.dayNum == 1 && gameState.turnPhase == 0){
                 for(int i = 0; i < 5; i++) {
                     dealActionCard(gameState.p0Hand);
                     dealActionCard(gameState.p1Hand);
@@ -83,17 +87,49 @@ public class GameActions {
     }
     //deals action cards at end of turn
     public boolean dealActionCard(ArrayList hand){
+        if(this.gameStart || gameState.turnPhase == 2 || gameState.actionCardPlayed) {
             hand.add(gameState.deckAction.get(0));
             gameState.deckAction.remove(0);
-            return true;
+            if(!gameState.actionCardPlayed && !gameState.actionCardPlayed){
+                gameState.turnPhase = 0;
+                return true;
+            }
+            else{
+                return true;
+            }
+        }
+        return false;
         //basically how ever the action cards are stored, the player will have their action
         //cards gain the first action card of the actioncard deck.
     }
     //gets the noble from noble line and gives it to person
     public boolean getNoble(ArrayList field){
-        field.add(gameState.nobleLine.get(0));
-        gameState.nobleLine.remove(0);
-        return true;
+        if(gameState.turnPhase == 1 || gameState.actionCardPlayed) {
+            if (gameState.nobleLine.get(0).getId().equals("Clown")) {
+                if (gameState.playerTurn == 0) {
+                    placeClown(gameState.p0Field, gameState.nobleLine.get(0));
+                    gameState.nobleLine.remove(0);
+                } else {
+                    placeClown(gameState.p1Field, gameState.nobleLine.get(0));
+                    gameState.nobleLine.remove(0);
+                }
+            }
+            else {
+                field.add(gameState.nobleLine.get(0));
+                gameState.nobleLine.remove(0);
+            }
+            if(gameState.actionCardPlayed){
+                return true;
+            }
+            else{
+                gameState.turnPhase++;
+                return true;
+            }
+        }
+        else{
+            return false;
+        }
+
         //same as dealAction card, just give the player the first card in the noble array
     }
     //enlarges card user picks
@@ -107,14 +143,22 @@ public class GameActions {
      */
     //lets user play actioncard
     public boolean playAction(ArrayList hand, int loc){
-        this.temp = (Card) hand.get(loc);
-        //acknowledgeCardAbility(this.temp);
-        return true;
+        if(gameState.turnPhase == 0) {
+            gameState.actionCardPlayed = true;
+            this.temp = (Card) hand.get(loc);
+            //acknowledgeCardAbility(this.temp);
+            gameState.turnPhase++;
+            return true;
+        }
+        else{
+            return false;
+        }
     }
     //lets user skip action card play
     public boolean skipAction(){
         if(gameState.turnPhase == 0){
             gameState.turnPhase++;
+
             return true;
 
         }
@@ -169,14 +213,19 @@ public class GameActions {
 
         }
         public boolean moveNoble(int nobleCardLocation, int newLocation){
-            tempList.add(gameState.nobleLine.get(nobleCardLocation));
-            gameState.nobleLine.set(nobleCardLocation, gameState.nobleLine.get(newLocation));
-            gameState.nobleLine.set(newLocation, tempList.get(0));
-            tempList.remove(0);
+            if(gameState.nobleLine.size() > nobleCardLocation && gameState.nobleLine.size() > newLocation ) {
+                tempList.add(gameState.nobleLine.get(nobleCardLocation));
+                gameState.nobleLine.set(nobleCardLocation, gameState.nobleLine.get(newLocation));
+                gameState.nobleLine.set(newLocation, tempList.get(0));
+                tempList.remove(0);
 
-            //code to remove card from array of cards, then make everycard's location inbewteen nobleCardLocation and newLocation have their
-            //location +1, then put the card in newLocation
-            return true;
+                //code to remove card from array of cards, then make everycard's location inbewteen nobleCardLocation and newLocation have their
+                //location +1, then put the card in newLocation
+                return true;
+            }
+            else{
+                return false;
+            }
         }
 
         //removes the desired card from enemy player and puts it in the player who called this method
@@ -227,11 +276,14 @@ public class GameActions {
             return false;
         }
         public boolean tradeHands(ArrayList p1, ArrayList p2){
-            tempList = p1;
-            p1 = p2;
-            p2 = tempList;
-            tempList = null;
-            return true;
+            if(gameState.turnPhase == 0) {
+                tempList = p1;
+                p1 = p2;
+                p2 = tempList;
+                tempList = null;
+                return true;
+            }
+            return false;
         }
 
         //requires drawing, so this will not be functional as is
@@ -303,7 +355,6 @@ public class GameActions {
                 gameState.deckNoble.remove(0);
             }
             return true;
-            //idk what this one does
         }
         public boolean discardActionCard(ArrayList hand){
             if(!hand.isEmpty()){
@@ -325,14 +376,10 @@ public class GameActions {
         }
         //cant do rn
 
-        public boolean placeClown(ArrayList reciever){
-            for(int i = 0; i < gameState.deckNoble.size()) {
-                if(gameState.deckNoble.get(i).getId().equals("Clown")) {
-                    reciever.add(gameState.deckNoble.get(i));
-                    return true;
-                }
-            }
-            return false;
+        public boolean placeClown(ArrayList reciever, Card card){
+
+            reciever.add(card);
+            return true;
 
         }
 
