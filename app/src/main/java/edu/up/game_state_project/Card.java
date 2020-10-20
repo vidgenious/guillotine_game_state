@@ -9,13 +9,15 @@ public class Card {
     public boolean isNoble;
     public boolean hasEffect;
     public int points;
+    public String cardColor;
     public String id;
 
     //Constructor for Card object
-    public Card(boolean isNoble, boolean hasEffect, int points, String id){
+    public Card(boolean isNoble, boolean hasEffect, int points, String cardColor,  String id){
         this.isNoble = isNoble;
         this.hasEffect = hasEffect;
         this.points = points;
+        this.cardColor = cardColor;
         this.id = id;
     }
 
