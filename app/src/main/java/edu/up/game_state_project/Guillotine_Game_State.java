@@ -67,7 +67,7 @@ public class Guillotine_Game_State {
         return s;
     }
 
-    public void initNobleDeck(){
+    private void initNobleDeck(){
         this.deckNoble.add(new Card(true, false, 4, "Archbishop"));
         this.deckNoble.add(new Card(true, false, 3, "Bad_Nun"));
         this.deckNoble.add(new Card(true, false, 3, "Baron"));
@@ -119,6 +119,70 @@ public class Guillotine_Game_State {
         this.deckNoble.add(new Card(true, true, 2, "Judge2"));
         this.deckNoble.add(new Card(true, false, 1, "Wealthy_Priest1"));
         this.deckNoble.add(new Card(true, false, 1, "Wealthy_Priest2"));
+    }
+
+    private void initActionDeck(){
+        this.deckAction.add(new Card(false, true, 0, "After_You"));
+        this.deckAction.add(new Card(false, true, 0, "Bribed"));
+        this.deckAction.add(new Card(false, true, 0, "Callous"));
+        this.deckAction.add(new Card(false, true, 0, "Church_Support"));
+        this.deckAction.add(new Card(false, true, 0, "Civic_Pride"));
+        this.deckAction.add(new Card(false, true, 0, "Civic_Support"));
+        this.deckAction.add(new Card(false, true, 0, "Clerical_Error"));
+        this.deckAction.add(new Card(false, true, 0, "Clothing_Swap"));
+        this.deckAction.add(new Card(false, true, 0, "Confusion"));
+        this.deckAction.add(new Card(false, true, 0, "Double_Feature1"));
+        this.deckAction.add(new Card(false, true, 0, "Double_Feature2"));
+        this.deckAction.add(new Card(false, true, 0, "Escape"));
+        this.deckAction.add(new Card(false, true, 0, "Extra_Cart1"));
+        this.deckAction.add(new Card(false, true, 0, "Extra_Cart2"));
+        this.deckAction.add(new Card(false, true, 0, "Fainting"));
+        this.deckAction.add(new Card(false, true, 0, "Fled"));
+        this.deckAction.add(new Card(false, true, 0, "Forced_Break"));
+        this.deckAction.add(new Card(false, true, 0, "Foreign_Support"));
+        this.deckAction.add(new Card(false, true, 0, "Forward_March"));
+        this.deckAction.add(new Card(false, true, 0, "Fountain"));
+        this.deckAction.add(new Card(false, true, 0, "Friend_Queen1"));
+        this.deckAction.add(new Card(false, true, 0, "Friend_Queen2"));
+        this.deckAction.add(new Card(false, true, 0, "Idiot1"));
+        this.deckAction.add(new Card(false, true, 0, "Idiot2"));
+        this.deckAction.add(new Card(false, true, 0, "Ignoble1"));
+        this.deckAction.add(new Card(false, true, 0, "Ignoble2"));
+        this.deckAction.add(new Card(false, true, 0, "Indifferent"));
+        this.deckAction.add(new Card(false, true, 0, "Infighting"));
+        this.deckAction.add(new Card(false, true, 0, "Info_Exchange"));
+        this.deckAction.add(new Card(false, true, 0, "Lack_Faith"));
+        this.deckAction.add(new Card(false, true, 0, "Lack_Support"));
+        this.deckAction.add(new Card(false, true, 0, "Late_Arrival"));
+        this.deckAction.add(new Card(false, true, 0, "Let_Cake"));
+        this.deckAction.add(new Card(false, true, 0, "Majesty"));
+        this.deckAction.add(new Card(false, true, 0, "Mass_Confusion"));
+        this.deckAction.add(new Card(false, true, 0, "Military_Might"));
+        this.deckAction.add(new Card(false, true, 0, "Military_Support"));
+        this.deckAction.add(new Card(false, true, 0, "Milling1"));
+        this.deckAction.add(new Card(false, true, 0, "Milling2"));
+        this.deckAction.add(new Card(false, true, 0, "Missed"));
+        this.deckAction.add(new Card(false, true, 0, "Missing_Heads"));
+        this.deckAction.add(new Card(false, true, 0, "Opinionated"));
+        this.deckAction.add(new Card(false, true, 0, "Political_Influence1"));
+        this.deckAction.add(new Card(false, true, 0, "Political_Influence2"));
+        this.deckAction.add(new Card(false, true, 0, "Public_Demand"));
+        this.deckAction.add(new Card(false, true, 0, "Pushed1"));
+        this.deckAction.add(new Card(false, true, 0, "Pushed2"));
+        this.deckAction.add(new Card(false, true, 0, "Rain_Delay"));
+        this.deckAction.add(new Card(false, true, 0, "Rat_Break"));
+        this.deckAction.add(new Card(false, true, 0, "Rush_Job"));
+        this.deckAction.add(new Card(false, true, 0, "Scarlet"));
+        this.deckAction.add(new Card(false, true, 0, "Stumble1"));
+        this.deckAction.add(new Card(false, true, 0, "Stumble2"));
+        this.deckAction.add(new Card(false, true, 0, "Long Walk"));
+        this.deckAction.add(new Card(false, true, 0, "Better_Thing"));
+        this.deckAction.add(new Card(false, true, 0, "Tough_Crowd"));
+        this.deckAction.add(new Card(false, true, 0, "Trip1"));
+        this.deckAction.add(new Card(false, true, 0, "Trip2"));
+        this.deckAction.add(new Card(false, true, 0, "Twist_Fate"));
+        this.deckAction.add(new Card(false, true, 0, "Was_Name"));
+    }
 
     }
-}
+
