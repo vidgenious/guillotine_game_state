@@ -1,29 +1,137 @@
 package edu.up.game_state_project;
 
 import android.graphics.Canvas;
+import android.view.View;
+import android.widget.Button;
+import android.widget.TextView;
 
 import java.lang.reflect.Array;
 import java.util.ArrayList;
+import java.util.Collections;
 
-public class Guillotine_Game_State {
-    public ArrayList<Card> p1Hand;
-    public ArrayList<Card> p1Field;
-    public ArrayList<Card> p0Hand;
-    public ArrayList<Card> p0Field;
-    public ArrayList<Card> nobleLine;
+/**
+ * @author William Cloutier
+ * @author Moses Karemera
+ * @author Maxwell McAtee
+ */
+
+public class Guillotine_Game_State{
+
+    //These are public for ease of use in the GameActions.java
     public int dayNum;
     public int playerTurn;
     public int p0Score;
     public int p1Score;
     public int lastFirstPlayer;
     public int currFirstPlayer;
+    public int turnPhase;
+    public ArrayList<Card> p1Hand;
+    public ArrayList<Card> p1Field;
+    public ArrayList<Card> p0Hand;
+    public ArrayList<Card> p0Field;
+    public ArrayList<Card> nobleLine;
     public ArrayList<Card> deckDiscard;
     public ArrayList<Card> deckAction;
     public ArrayList<Card> deckNoble;
-    public int turnPhase;
     public String[] playerNames;
     public boolean actionCardPlayed;
 
+
+    // constructor to init all variables
+    public Guillotine_Game_State() {
+        this.dayNum = 1;
+        this.playerTurn = 0;
+        this.p0Score = 0;
+        this.p1Score = 0;
+        this.lastFirstPlayer = 0;
+        this.currFirstPlayer = 0;
+        this.turnPhase = 0;
+        this.playerNames = new String[2];
+        this.p1Hand = new ArrayList<Card>();
+        this.p0Hand = new ArrayList<Card>();
+        this.p1Field = new ArrayList<Card>();
+        this.p0Field = new ArrayList<Card>();
+        this.nobleLine = new ArrayList<Card>();
+        this.deckDiscard = new ArrayList<Card>();
+        this.deckAction = new ArrayList<Card>();
+        initActionDeck();
+
+        this.deckNoble = new ArrayList<Card>();
+        initNobleDeck();
+
+        this.actionCardPlayed = false;
+
+
+
+    }
+
+    //Deep copy constructor
+    public Guillotine_Game_State(Guillotine_Game_State origin) {
+        this.dayNum = origin.dayNum;
+        this.playerTurn = origin.playerTurn;
+        this.p0Score = origin.p0Score;
+        this.p1Score = origin.p1Score;
+        this.lastFirstPlayer = origin.lastFirstPlayer;
+        this.currFirstPlayer = origin.currFirstPlayer;
+        this.turnPhase = origin.turnPhase;
+
+        this.p1Hand = new ArrayList<Card>();
+        for(Card c : origin.p1Hand){
+            this.p1Hand.add(c);
+        }
+
+
+        this.p0Hand = new ArrayList<Card>();
+        for(Card c : origin.p0Hand){
+            this.p0Hand.add(c);
+        }
+
+
+        this.p1Field = new ArrayList<Card>();
+        for(Card c : origin.p1Field){
+            this.p1Field.add(c);
+        }
+
+
+        this.p0Field = new ArrayList<>();
+        for(Card c : origin.p0Field){
+            this.p0Field.add(c);
+        }
+
+        this.nobleLine = new ArrayList<>();
+        for(Card c : origin.nobleLine){
+            this.nobleLine.add(c);
+        }
+
+
+        this.deckDiscard = new ArrayList<>();
+        for(Card c : origin.deckDiscard){
+            this.deckDiscard.add(c);
+        }
+
+
+        this.deckAction = new ArrayList<>();
+        for(Card c : origin.deckAction){
+            this.deckAction.add(c);
+        }
+
+
+        this.deckNoble = new ArrayList<>();
+        for(Card c : origin.deckNoble){
+            this.deckNoble.add(c);
+        }
+
+        this.playerNames = new String[2];
+        for(String n : origin.playerNames){
+            this.playerNames = origin.playerNames;
+        }
+
+    }
+
+
+
+
+    //ToString for creating a string with all the information on a game state
     @Override
     public String toString(){
         String s = "Player Turn: " + playerTurn +"\nDay: " + dayNum + "\nP0 Score: " + p0Score +
@@ -70,6 +178,7 @@ public class Guillotine_Game_State {
         return s;
     }
 
+    //This initiates all of the noble cards ands places them into the deck unshuffled
     public void initNobleDeck(){
         this.deckNoble.add(new Card(true, false, 4, "Blue","Archbishop"));
         this.deckNoble.add(new Card(true, false, 3, "Blue","Bad_Nun"));
@@ -126,7 +235,7 @@ public class Guillotine_Game_State {
     }
 
 
-
+    //This initiates all of the action cards ands places them into the deck unshuffled
     private void initActionDeck(){
         this.deckAction.add(new Card(false, true, 0, "actionCard", "After_You"));
         this.deckAction.add(new Card(false, true, 0, "actionCard","Bribed"));
@@ -189,90 +298,12 @@ public class Guillotine_Game_State {
         this.deckAction.add(new Card(false, true, 0, "actionCard","Twist_Fate"));
         this.deckAction.add(new Card(false, true, 0, "actionCard","Was_Name"));
     }
-
-
-
-
-
-    // constructor to init all variables
-    public Guillotine_Game_State() {
-        this.dayNum = 0;
-        this.playerTurn = 0;
-        this.p0Score = 0;
-        this.p1Score = 0;
-        this.lastFirstPlayer = 0;
-        this.currFirstPlayer = 0;
-        this.turnPhase = 0;
-        this.playerNames = new String[]{};
-        this.p1Hand = new ArrayList<Card>();
-        this.p0Hand = new ArrayList<Card>();
-        this.p1Field = new ArrayList<Card>();
-        this.p0Field = new ArrayList<Card>();
-        this.nobleLine = new ArrayList<Card>();
-        this.deckDiscard = new ArrayList<Card>();
-        this.deckAction = new ArrayList<Card>();
-        this.deckNoble = new ArrayList<Card>();
-        this.actionCardPlayed = false;
-
-
-    }
-
-    //Deep copy constructor
-    public Guillotine_Game_State(Guillotine_Game_State origin) {
-        this.dayNum = origin.dayNum;
-        this.playerTurn = origin.playerTurn;
-        this.p0Score = origin.p0Score;
-        this.p1Score = origin.p1Score;
-        this.lastFirstPlayer = origin.lastFirstPlayer;
-        this.currFirstPlayer = origin.currFirstPlayer;
-        this.turnPhase = origin.turnPhase;
-
-        this.p1Hand = new ArrayList<Card>();
-        for(Card c : origin.p1Hand){
-            this.p1Hand.add(c);
-        }
-
-
-        this.p0Hand = new ArrayList<Card>();
-        for(Card c : origin.p0Hand){
-            this.p0Hand.add(c);
-        }
-
-
-        this.p1Field = new ArrayList<Card>();
-        for(Card c : origin.p1Field){
-            this.p1Field.add(c);
-        }
-
-
-        this.p0Field = new ArrayList<>();
-        for(Card c : origin.p0Field){
-            this.p0Field.add(c);
-        }
-
-        this.nobleLine = new ArrayList<>();
-        for(Card c : origin.nobleLine){
-            this.nobleLine.add(c);
-        }
-
-
-        this.deckDiscard = new ArrayList<>();
-        for(Card c : origin.deckDiscard){
-            this.deckDiscard.add(c);
-        }
-
-
-        this.deckAction = new ArrayList<>();
-        for(Card c : origin.deckAction){
-            this.deckAction.add(c);
-        }
-
-
-        this.deckNoble = new ArrayList<>();
-        for(Card c : origin.deckNoble){
-            this.deckNoble.add(c);
-        }
-
-
-    }
 }
+
+
+
+
+
+
+
+

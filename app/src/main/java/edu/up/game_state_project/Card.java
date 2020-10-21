@@ -1,6 +1,12 @@
 package edu.up.game_state_project;
 
 /**
+ * @author William Cloutier
+ * @author Moses Karemera
+ * @author Maxwell McAtee
+ */
+
+/*
  * This class is very bare bones and not in its final state. It only has the information
  * necessary for part d
  */
